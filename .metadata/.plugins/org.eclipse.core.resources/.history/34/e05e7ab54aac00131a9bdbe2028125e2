@@ -1,0 +1,123 @@
+package com.jumax9.mygravity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+@SuppressLint("ShowToast")
+public class Calculos extends Activity implements OnClickListener {
+	float altitud;
+	float g0, g, coef, rT, rNew;
+	String gravedad, planeta, objeto;
+	TextView resultado, resultadoPlaneta, resultadoOopart;
+	Spinner spinnerOoparts;
+	final Context c = this;
+	int counter;
+
+	// Population of the spinner
+	String[] spinnerPop = { "Aneto", "Calvitero", "Dólmenes de Menga", "Everest", "Mulhacén", "Peña Trevinca", "Pica d\'Estats", "Puig Major", "Teide", "Teleno" };
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.result);
+		// Get the content from the intent that got me here
+		Bundle extras = getIntent().getExtras();
+		planeta = extras.getString("MainActivity.planeta");
+
+		// Read different views
+		resultado = (TextView) findViewById(R.id.resultado);
+		Button refrescar = (Button) findViewById(R.id.refrescar);
+		resultadoPlaneta = (TextView) findViewById(R.id.planetaResultado);
+		resultadoOopart = (TextView) findViewById(R.id.ooparts);
+		spinnerOoparts = (Spinner) findViewById(R.id.spinnerOoparts);
+
+		// Write texts
+		resultadoPlaneta.setText(Utilidades.planetGravity(planeta));
+		calculoAltitud();
+
+		// Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
+
+
+		//
+
+		poblarSpinner(spinnerOoparts);
+
+		// set listeners
+		refrescar.setOnClickListener(this);
+		spinnerOoparts.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				objeto = spinnerOoparts.getSelectedItem().toString();
+				try {
+					resultadoOopart.setText(Utilidades.oopartGravity(c, objeto));
+				} catch (Exception e) {
+					Toast.makeText(c, e.toString(), Toast.LENGTH_LONG);
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	public void poblarSpinner(Spinner s) {
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < spinnerPop.length; i++) {
+			list.add(spinnerPop[i]);
+		}
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		s.setAdapter(dataAdapter);
+	}
+
+	public void calculoAltitud() {
+		altitud = ElHippyEse.altitude(this);
+		resultado.setText(Utilidades.calculation(altitud));
+	}
+	
+	public void setText() {
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.refrescar:
+				ElHippyEse.refrescar();
+				resultadoOopart.setText(Utilidades.oopartGravity(this, objeto));
+				calculoAltitud();
+
+		}
+	}
+
+}

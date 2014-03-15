@@ -1,0 +1,19 @@
+package com.jumax9.mygravity;
+
+import android.app.Activity;
+import android.location.LocationManager;
+
+public class ElHippyEse extends Activity {
+	
+	public double altitude() {
+		double altitud;
+		try {
+			LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+			altitud = Utilidades.getAltitud(locationManager);
+		} catch (Exception e) {
+			altitud = 1;
+		}
+		return altitud;
+	}
+
+}

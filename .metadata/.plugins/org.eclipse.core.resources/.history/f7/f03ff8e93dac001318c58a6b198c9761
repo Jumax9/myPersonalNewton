@@ -1,0 +1,32 @@
+package com.jumax9.mygravity;
+
+public class Ooparts {
+	
+	public static Oopart eleccion(String s) {
+		if (s == "Mulhacén") {
+			return mulhacen();
+		} else if (s == "Aneto") {
+			return aneto();
+		}
+		return null;
+	}
+
+	public static Oopart mulhacen() {
+		String name = "el Mulhacén";
+		float height = 3479f; // m
+		float latitude = 37.061671f;
+		float longitude = -3.317767f;
+		Oopart mulh = new Oopart(name, latitude, longitude, height, 0);
+		return mulh;
+	}
+	
+	public static Oopart aneto() {
+		String name = "el Aneto";
+		float height = 3404f; // m
+		float latitude = 42.633333f;
+		float longitude = 0.666667;
+		Oopart anet = new Oopart(name, latitude, longitude, height, 0);
+		return anet;
+	}
+
+}
