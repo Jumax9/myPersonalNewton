@@ -47,14 +47,6 @@
             android:textSize="20sp" >
         </TextView>
         
-        <Button
-            android:id="@+id/refrescar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:text="@string/refrescar" />
-        
     </LinearLayout>
 
 </RelativeLayout>

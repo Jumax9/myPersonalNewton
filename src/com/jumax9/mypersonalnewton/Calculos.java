@@ -1,6 +1,5 @@
 package com.jumax9.mypersonalnewton;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +9,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +20,7 @@ import com.jumax9.mypersonalnewton.utilities.ElHippyEse;
 import com.jumax9.mypersonalnewton.utilities.Utilidades;
 
 @SuppressLint("ShowToast")
-public class Calculos extends Activity implements OnClickListener {
+public class Calculos extends Activity {
 	float altitud;
 	float g0, g, coef, rT, rNew;
 	String gravedad, planeta, objeto;
@@ -45,7 +42,6 @@ public class Calculos extends Activity implements OnClickListener {
 
 		// Read different views
 		resultado = (TextView) findViewById(R.id.resultado);
-		Button refrescar = (Button) findViewById(R.id.refrescar);
 		resultadoPlaneta = (TextView) findViewById(R.id.planetaResultado);
 		resultadoOopart = (TextView) findViewById(R.id.ooparts);
 		spinnerOoparts = (Spinner) findViewById(R.id.spinnerOoparts);
@@ -60,7 +56,6 @@ public class Calculos extends Activity implements OnClickListener {
 		// Toast.makeText(getApplicationContext(), e.toString(),Toast.LENGTH_LONG).show();
 
 		// set listeners
-		refrescar.setOnClickListener(this);
 		spinnerOoparts.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -114,16 +109,4 @@ public class Calculos extends Activity implements OnClickListener {
 		objeto = spinnerOoparts.getSelectedItem().toString();
 		resultadoOopart.setText(Utilidades.oopartGravity(this, objeto));
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.refrescar:
-				ElHippyEse.refrescar();
-				calculoAltitud();
-				calculoOopart();
-
-		}
-	}
-
 }
